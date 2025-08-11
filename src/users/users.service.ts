@@ -2,7 +2,6 @@ import { Injectable, ConflictException, Logger, InternalServerErrorException } f
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
@@ -41,15 +40,11 @@ export class UsersService {
     }
   }
 
+  // Ahora no vuelve a hashear, solo guarda lo que recibe
   async create(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
     const { username, password } = createUserDto;
     const trimmedUsername = username.trim();
     const trimmedPassword = password.trim();
-
-    // Validación reforzada
-    if (!trimmedPassword || trimmedPassword.length < 8) {
-      throw new ConflictException('La contraseña debe tener al menos 8 caracteres');
-    }
 
     try {
       const exists = await this.findByUsername(trimmedUsername);
@@ -57,10 +52,10 @@ export class UsersService {
         throw new ConflictException('Nombre de usuario no disponible');
       }
 
-      const hashed = await bcrypt.hash(trimmedPassword, 12);
+      // Guardar directamente (ya viene hasheada desde AuthService)
       const newUser = this.usersRepository.create({
         username: trimmedUsername,
-        password: hashed,
+        password: trimmedPassword,
       });
 
       const savedUser = await this.usersRepository.save(newUser);
@@ -71,7 +66,6 @@ export class UsersService {
     } catch (error) {
       this.logger.error(`Error creando usuario: ${error.message}`, error.stack);
 
-      // Si es un error de validación conocido, lo relanzamos
       if (error instanceof ConflictException) {
         throw error;
       }

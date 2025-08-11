@@ -12,7 +12,6 @@ type SafeUser = {
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
-  private readonly PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
   constructor(
     private readonly usersService: UsersService,
@@ -52,16 +51,16 @@ export class AuthService {
 
       const payload = {
         username: user.username,
-        sub: user.id,
-        iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 3600 // 1 hora
+        sub: user.id
       };
 
       return {
         access_token: this.jwtService.sign(payload, {
           secret: process.env.JWT_SECRET || 'fallbackSecret',
+          expiresIn: process.env.JWT_EXPIRES_IN || '3600s'
         })
       };
+
     } catch (error) {
       this.logger.error(`Error en login`, error.stack);
       throw new InternalServerErrorException('Error al generar token');
@@ -73,11 +72,9 @@ export class AuthService {
     const trimmedPassword = password.trim();
 
     try {
-      // Validación mejorada
-      if (!this.PASSWORD_REGEX.test(trimmedPassword)) {
-        throw new ConflictException(
-          'La contraseña requiere: 8+ caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 símbolo (@$!%*?&)'
-        );
+      // Validación mínima: no vacío
+      if (!trimmedPassword) {
+        throw new ConflictException('La contraseña no puede estar vacía');
       }
 
       const existingUser = await this.usersService.findByUsername(trimmedUsername);

@@ -1,12 +1,12 @@
-import { IsBoolean, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsOptional, IsString, IsBoolean, MinLength } from 'class-validator';
 
 export class UpdateTaskDto {
   @IsOptional()
-  @IsString()
-  @MaxLength(255, { message: 'El título no puede exceder los 255 caracteres' })
+  @IsString({ message: 'El título debe ser texto' })
+  @MinLength(1, { message: 'El título no puede estar vacío' })
   title?: string;
 
   @IsOptional()
-  @IsBoolean()
+  @IsBoolean({ message: 'El campo completed debe ser true o false' })
   completed?: boolean;
 }

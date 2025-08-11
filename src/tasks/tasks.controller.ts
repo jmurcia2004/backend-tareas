@@ -18,7 +18,6 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { AuthGuard } from '@nestjs/passport';
 import type { Request } from 'express';
-import { User } from '../users/user.entity'; // Importa la entidad User
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('tasks')
@@ -26,11 +25,14 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   private getUserId(req: Request): number {
-    const user = req.user as User; // Type assertion explícito
-    if (!user?.id) {
+    // Adaptar para que funcione con lo que devuelve JwtStrategy
+    const user = req.user as { id?: number; userId?: number };
+
+    const id = user?.id ?? user?.userId; // Prioriza id, sino usa userId
+    if (!id) {
       throw new BadRequestException('Usuario no autenticado correctamente');
     }
-    return user.id;
+    return id;
   }
 
   @Post()

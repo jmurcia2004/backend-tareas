@@ -1,13 +1,10 @@
-import { IsString, Matches } from 'class-validator';
+import { IsString, MinLength } from 'class-validator';
 
 export class LoginDto {
   @IsString()
   username: string;
 
   @IsString()
-  @Matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-    { message: 'La contraseña debe contener: 1 mayúscula, 1 minúscula, 1 número y 1 símbolo (@$!%*?&)' }
-  )
+  @MinLength(4, { message: 'La contraseña debe tener al menos 4 caracteres' })
   password: string;
 }

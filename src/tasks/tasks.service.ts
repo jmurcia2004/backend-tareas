@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Task } from './task.entity';
@@ -15,16 +15,41 @@ export class TasksService {
   async findAllByUser(userId: number): Promise<Task[]> {
     return this.taskRepository.find({
       where: { user: { id: userId } },
-      relations: ['user'] // Opcional: carga la relación con usuario
+      relations: ['user'],
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        createdAt: true,
+        user: {
+          id: true,
+          username: true
+        }
+      }
     });
   }
 
   async create(createTaskDto: CreateTaskDto, userId: number): Promise<Task> {
     const task = this.taskRepository.create({
       ...createTaskDto,
-      user: { id: userId } // Asocia la tarea al usuario
+      user: { id: userId }
     });
-    return this.taskRepository.save(task);
+    await this.taskRepository.save(task);
+
+    return (await this.taskRepository.findOne({
+      where: { id: task.id },
+      relations: ['user'],
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        createdAt: true,
+        user: {
+          id: true,
+          username: true
+        }
+      }
+    })) as Task;
   }
 
   async update(id: number, updateTaskDto: UpdateTaskDto, userId: number): Promise<Task> {
@@ -37,7 +62,22 @@ export class TasksService {
     }
 
     Object.assign(task, updateTaskDto);
-    return this.taskRepository.save(task);
+    await this.taskRepository.save(task);
+
+    return (await this.taskRepository.findOne({
+      where: { id: task.id },
+      relations: ['user'],
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        createdAt: true,
+        user: {
+          id: true,
+          username: true
+        }
+      }
+    })) as Task;
   }
 
   async remove(id: number, userId: number): Promise<void> {
