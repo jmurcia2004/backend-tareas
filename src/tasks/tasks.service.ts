@@ -12,20 +12,22 @@ export class TasksService {
     private taskRepository: Repository<Task>,
   ) {}
 
+  private taskSelectOptions = {
+    id: true,
+    title: true,
+    completed: true,
+    createdAt: true,
+    user: {
+      id: true,
+      username: true
+    }
+  };
+
   async findAllByUser(userId: number): Promise<Task[]> {
     return this.taskRepository.find({
       where: { user: { id: userId } },
       relations: ['user'],
-      select: {
-        id: true,
-        title: true,
-        completed: true,
-        createdAt: true,
-        user: {
-          id: true,
-          username: true
-        }
-      }
+      select: this.taskSelectOptions
     });
   }
 
@@ -37,18 +39,9 @@ export class TasksService {
     await this.taskRepository.save(task);
 
     return (await this.taskRepository.findOne({
-      where: { id: task.id },
+      where: { id: task.id, user: { id: userId } },
       relations: ['user'],
-      select: {
-        id: true,
-        title: true,
-        completed: true,
-        createdAt: true,
-        user: {
-          id: true,
-          username: true
-        }
-      }
+      select: this.taskSelectOptions
     })) as Task;
   }
 
@@ -65,18 +58,9 @@ export class TasksService {
     await this.taskRepository.save(task);
 
     return (await this.taskRepository.findOne({
-      where: { id: task.id },
+      where: { id: task.id, user: { id: userId } },
       relations: ['user'],
-      select: {
-        id: true,
-        title: true,
-        completed: true,
-        createdAt: true,
-        user: {
-          id: true,
-          username: true
-        }
-      }
+      select: this.taskSelectOptions
     })) as Task;
   }
 

@@ -25,10 +25,8 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   private getUserId(req: Request): number {
-    // Adaptar para que funcione con lo que devuelve JwtStrategy
     const user = req.user as { id?: number; userId?: number };
-
-    const id = user?.id ?? user?.userId; // Prioriza id, sino usa userId
+    const id = user?.id ?? user?.userId;
     if (!id) {
       throw new BadRequestException('Usuario no autenticado correctamente');
     }
@@ -64,3 +62,4 @@ export class TasksController {
     return this.tasksService.remove(id, this.getUserId(req));
   }
 }
+
