@@ -7,5 +7,5 @@ export class CreateTaskDto {
 
   @IsOptional()
   @IsString()
-  description?: string;
+  description?: string; // ✅ Descripción opcional
 }

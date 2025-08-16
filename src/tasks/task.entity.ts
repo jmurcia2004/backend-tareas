@@ -13,6 +13,12 @@ export class Task {
   title: string;
 
   @Column({
+    type: 'text',
+    nullable: true
+  })
+  description?: string; // ✅ Nueva columna para la descripción
+
+  @Column({
     type: 'boolean',
     default: false
   })

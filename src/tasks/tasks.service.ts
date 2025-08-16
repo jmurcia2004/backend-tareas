@@ -15,6 +15,7 @@ export class TasksService {
   private taskSelectOptions = {
     id: true,
     title: true,
+    description: true, // ✅ Agregada
     completed: true,
     createdAt: true,
     user: {
@@ -75,3 +76,4 @@ export class TasksService {
     }
   }
 }
+

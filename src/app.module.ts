@@ -14,10 +14,14 @@ import { AuthModule } from './auth/auth.module';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: process.env.DATABASE_URL || 'postgres://postgres:admin123@localhost:5432/taskdb',
+      url:
+        process.env.DATABASE_URL ||
+        'postgres://postgres:admin123@localhost:5432/taskdb',
       entities: [Task, User],
-      synchronize: true, // Solo para desarrollo (poner false en producción)
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false, // SSL solo en prod
+      synchronize: true, // Solo para desarrollo
+      ssl: process.env.DATABASE_URL?.includes('render.com')
+        ? { rejectUnauthorized: false }
+        : false, // SSL automático solo si es Render
     }),
     TasksModule,
     UsersModule,
