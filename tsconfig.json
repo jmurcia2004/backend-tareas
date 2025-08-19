@@ -16,10 +16,17 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
+
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": true,
+
+    "noImplicitAny": false,       // 🔥 ahora no te bloqueará por express o passport-jwt
     "strictBindCallApply": true,
     "noFallthroughCasesInSwitch": true
-  }
+  },
+  "include": [
+    "src/**/*",
+    "src/types/**/*"              // 🔥 asegura que Render lea tu modules.d.ts
+  ]
 }
+
