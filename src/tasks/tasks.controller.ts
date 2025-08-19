@@ -25,7 +25,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   private getUserId(req: Request): number {
-    const user = req.user as { id?: number; userId?: number };
+    const user = (req as any).user; // 👈 forzamos el cast
     const id = user?.id ?? user?.userId;
     if (!id) {
       throw new BadRequestException('Usuario no autenticado correctamente');
