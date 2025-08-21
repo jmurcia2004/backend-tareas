@@ -1,11 +1,11 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateTaskDto {
-  @IsNotEmpty()
-  @IsString()
+  @IsNotEmpty({ message: 'El título no puede estar vacío' })
+  @IsString({ message: 'El título debe ser texto' })
   title: string;
 
   @IsOptional()
-  @IsString()
-  description?: string; // ✅ Descripción opcional
+  @IsString({ message: 'La descripción debe ser texto' })
+  description?: string | null; // ✅ ahora acepta null
 }
