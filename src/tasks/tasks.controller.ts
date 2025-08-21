@@ -25,8 +25,8 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   private getUserId(req: Request): number {
-    const user = (req as any).user; // 👈 forzamos el cast
-    const id = user?.id ?? user?.userId;
+    const user = (req as any).user; // viene del JwtStrategy
+    const id = user?.id;  // 👈 corregido, usamos siempre "id"
     if (!id) {
       throw new BadRequestException('Usuario no autenticado correctamente');
     }
@@ -62,4 +62,5 @@ export class TasksController {
     return this.tasksService.remove(id, this.getUserId(req));
   }
 }
+
 
