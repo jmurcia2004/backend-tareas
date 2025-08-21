@@ -34,9 +34,11 @@ export class TasksService {
 
   async create(createTaskDto: CreateTaskDto, userId: number): Promise<Task> {
     const task = this.taskRepository.create({
-      ...createTaskDto,
+      title: createTaskDto.title,
+      description: createTaskDto.description ?? undefined, //  antes usabas null
       user: { id: userId }
     });
+
     await this.taskRepository.save(task);
 
     return (await this.taskRepository.findOne({
@@ -45,6 +47,7 @@ export class TasksService {
       select: this.taskSelectOptions
     })) as Task;
   }
+
 
   async update(id: number, updateTaskDto: UpdateTaskDto, userId: number): Promise<Task> {
     const task = await this.taskRepository.findOne({

@@ -7,5 +7,5 @@ export class CreateTaskDto {
 
   @IsOptional()
   @IsString({ message: 'La descripción debe ser texto' })
-  description?: string | null; // ✅ ahora acepta null
+  description?: string;  // ✅ solo la propiedad
 }
