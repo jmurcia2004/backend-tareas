@@ -1,12 +1,17 @@
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class UpdateTaskDto {
   @IsOptional()
-  @IsBoolean()
-  completed?: boolean;
+  @IsString()
+  @MinLength(1, { message: 'El título no puede estar vacío' })
+  title?: string;
 
   @IsOptional()
   @IsString()
-  description?: string; // ✅ Permitir actualizar la descripción
+  description?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  completed?: boolean;
 }
 
