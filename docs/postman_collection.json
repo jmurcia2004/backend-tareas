@@ -1,0 +1,227 @@
+{
+	"info": {
+		"_postman_id": "aa908384-2b3a-48ac-a68e-9a514f808cea",
+		"name": "API Tareas - Soacha",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47404722",
+		"_collection_link": "https://rodric04murcia-8454537.postman.co/workspace/Felipe-Murcia's-Workspace~fecec6d5-6a0e-4f05-8458-ef33b3ec2074/collection/47404722-aa908384-2b3a-48ac-a68e-9a514f808cea?action=share&source=collection_link&creator=47404722"
+	},
+	"item": [
+		{
+			"name": "Auth → Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"usuario2\",\r\n  \"password\": \"123456\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend-tareas-dqhb.onrender.com/auth/register",
+					"protocol": "https",
+					"host": [
+						"backend-tareas-dqhb",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth → Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"usuario2\",\r\n  \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend-tareas-dqhb.onrender.com/auth/login",
+					"protocol": "https",
+					"host": [
+						"backend-tareas-dqhb",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tasks → Get All",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8yIiwic3ViIjozLCJpYXQiOjE3NTYwODk4NzIsImV4cCI6MTc1NjE3NjI3Mn0.hqyhom0-vxaTyvx99zP6EXn0RtX0LmvMLHGH5Lq3x68",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://backend-tareas-dqhb.onrender.com/tasks",
+					"protocol": "https",
+					"host": [
+						"backend-tareas-dqhb",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tasks → Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8yIiwic3ViIjozLCJpYXQiOjE3NTYwODk4NzIsImV4cCI6MTc1NjE3NjI3Mn0.hqyhom0-vxaTyvx99zP6EXn0RtX0LmvMLHGH5Lq3x68",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Comprar víveres\",\r\n  \"description\": \"Leche, pan y huevos\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend-tareas-dqhb.onrender.com/tasks",
+					"protocol": "https",
+					"host": [
+						"backend-tareas-dqhb",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tasks → Update",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8yIiwic3ViIjozLCJpYXQiOjE3NTYwODk4NzIsImV4cCI6MTc1NjE3NjI3Mn0.hqyhom0-vxaTyvx99zP6EXn0RtX0LmvMLHGH5Lq3x68",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Comprar víveres (actualizado)\",\r\n  \"description\": \"Leche deslactosada y pan integral\",\r\n  \"completed\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://backend-tareas-dqhb.onrender.com/tasks/3",
+					"protocol": "https",
+					"host": [
+						"backend-tareas-dqhb",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"tasks",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tasks → Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzdWFyaW8yIiwic3ViIjozLCJpYXQiOjE3NTYwODk4NzIsImV4cCI6MTc1NjE3NjI3Mn0.hqyhom0-vxaTyvx99zP6EXn0RtX0LmvMLHGH5Lq3x68",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://backend-tareas-dqhb.onrender.com/tasks/3",
+					"protocol": "https",
+					"host": [
+						"backend-tareas-dqhb",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"tasks",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
